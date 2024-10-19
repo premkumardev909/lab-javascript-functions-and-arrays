@@ -44,6 +44,8 @@ function sum(arr) {
           total += item.length;
       } else if (typeof item === 'boolean') {
           total += item ? 1 : 0;
+      } else {
+          throw new Error("Unsupported data type sir or ma'am");
       }
   }
   return total;
@@ -56,19 +58,21 @@ function sum(arr) {
 const numbersAvg = [2, 6, 9, 10, 7, 4, 1, 9];
 
 function averageNumbers(numbers) {
+  if (numbers.length === 0) return null; // Return null for empty array
   return sumNumbers(numbers) / numbers.length;
 }
-
 // Level 2: Array of strings
 const wordsArr = ['seat', 'correspond', 'linen', 'motif', 'hole', 'smell', 'smart', 'chaos', 'fuel', 'palace'];
 
 function averageWordLength(words) {
+  if (words.length === 0) return null; // Return null for empty array
   let totalLength = sum(words.map(word => word.length));
   return totalLength / words.length;
 }
 
 // Bonus - Iteration #4.1
 function avg(arr) {
+  if (arr.length === 0) return null; // Return null for empty array
   const total = sum(arr);
   return total / arr.length;
 }
@@ -89,6 +93,7 @@ const wordsUnique = [
 ];
 
 function uniquifyArray(words) {
+  if (words.length === 0) return null; // Return null for empty array
   const uniqueWords = [];
   for (let word of words) {
       if (!uniqueWords.includes(word)) {
@@ -99,17 +104,16 @@ function uniquifyArray(words) {
 }
 
 
-
 // Iteration #6: Find elements
 const wordsFind = ['machine', 'subset', 'trouble', 'starting', 'matter', 'eating', 'truth', 'disobedience'];
 
 function doesWordExist(words, wordToSearch) {
+  if (words.length === 0) return null; // Return null for empty array
   for (let word of words) {
       if (word === wordToSearch) return true;
   }
   return false;
 }
-
 
 
 // Iteration #7: Count repetition
@@ -161,7 +165,29 @@ const matrix = [
   [1, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52, 1, 89, 19, 67, 48]
 ];
 
-function greatestProduct() {}
+function greatestProduct(matrix) {
+  let maxProduct = 0;
+
+  // Check horizontally and vertically for maximum product of four adjacent numbers.
+  for (let i = 0; i < matrix.length; i++) {
+      for (let j = 0; j < matrix[i].length; j++) {
+          // Horizontal product
+          if (j < matrix[i].length - 3) {
+              const horizontalProduct = 
+                  matrix[i][j] * matrix[i][j + 1] * matrix[i][j + 2] * matrix[i][j + 3];
+              maxProduct = Math.max(maxProduct, horizontalProduct);
+          }
+          // Vertical product
+          if (i < matrix.length - 3) {
+              const verticalProduct = 
+                  matrix[i][j] * matrix[i + 1][j] * matrix[i + 2][j] * matrix[i + 3][j];
+              maxProduct = Math.max(maxProduct, verticalProduct);
+          }
+      }
+  }
+
+  return maxProduct; // Ensure this returns the maximum product found
+}
 
 
 
